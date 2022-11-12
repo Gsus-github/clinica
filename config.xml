@@ -2,19 +2,19 @@
 <configuracion>
   <rutas>
     <ruta name="MITO">
-      <direccion>c:\MITO</direccion>
+      <direccion>MITO</direccion>
     </ruta>
       <ruta name="BDD">
-    <direccion>c:\BDD</direccion>  
+    <direccion>BDD</direccion>  
     </ruta>
     <ruta name="LOGS">
-      <direccion>c:\LOGS</direccion>  
+      <direccion>LOGS</direccion>  
     </ruta>
     <ruta name="DOCS">
-      <direccion>c:\DOCS</direccion>  
+      <direccion>DOCS</direccion>  
     </ruta>
     <ruta name="BACK">
-      <direccion>c:\BACK</direccion>    
+      <direccion>BACK</direccion>    
     </ruta>
   </rutas>
   <backup>
