@@ -1,0 +1,15 @@
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/bin/Debug/net6.0/clinica
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/bin/Debug/net6.0/clinica.deps.json
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/bin/Debug/net6.0/clinica.runtimeconfig.json
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/bin/Debug/net6.0/clinica.dll
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/bin/Debug/net6.0/ref/clinica.dll
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/bin/Debug/net6.0/clinica.pdb
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.csproj.AssemblyReference.cache
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.GeneratedMSBuildEditorConfig.editorconfig
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.AssemblyInfoInputs.cache
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.AssemblyInfo.cs
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.csproj.CoreCompileInputs.cache
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.dll
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/ref/clinica.dll
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.pdb
+/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/obj/Debug/net6.0/clinica.genruntimeconfig.cache
