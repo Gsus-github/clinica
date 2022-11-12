@@ -1,0 +1,9 @@
+<!ELEMENT configuracion (rutas, backup)>
+<!ELEMENT rutas (ruta+)>
+<!ELEMENT ruta (direccion)>
+<!ATTLIST ruta
+          name CDATA #REQUIRED>
+<!ELEMENT direccion (#PCDATA)>
+<!ELEMENT backup (fechaUltimoBackup, horaUltimoBackup)>
+<!ELEMENT fechaUltimoBackup (#PCDATA)>
+<!ELEMENT horaUltimoBackup (#PCDATA)>

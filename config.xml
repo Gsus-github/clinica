@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configuracion>
+  <rutas>
+    <ruta name="MITO">
+      <direccion>c:\MITO</direccion>
+    </ruta>
+      <ruta name="BDD">
+    <direccion>c:\BDD</direccion>  
+    </ruta>
+    <ruta name="LOGS">
+      <direccion>c:\LOGS</direccion>  
+    </ruta>
+    <ruta name="DOCS">
+      <direccion>c:\DOCS</direccion>  
+    </ruta>
+    <ruta name="BACK">
+      <direccion>c:\BACK</direccion>    
+    </ruta>
+  </rutas>
+  <backup>
+    <fechaUltimoBackup>2022-10-01</fechaUltimoBackup>
+    <horaUltimoBackup>10:10</horaUltimoBackup>
+  </backup>
+</configuracion>
