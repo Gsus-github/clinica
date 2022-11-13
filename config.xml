@@ -5,7 +5,7 @@
       <direccion>MITO</direccion>
     </ruta>
       <ruta name="BDD">
-    <direccion>BDD</direccion>  
+    <direccion>./BDD</direccion>  
     </ruta>
     <ruta name="LOGS">
       <direccion>LOGS</direccion>  

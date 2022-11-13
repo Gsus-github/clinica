@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "/gRWL+su+EQt7WnCe6OcF20WH1Z0sfKfv4ZpQW3afKdaV5luvCHCTyugxAzfFTnfgbf1AAaTpsCGmj5DuOgP+w==",
+  "dgSpecHash": "DacKDUSjBWx9NTcu/1E12kRij8vbS86fe7/khiwexZHQ5DIOvMbShP5pjW4+FRlaKJInlq2IX+sufXdYBqAr+A==",
   "success": true,
   "projectFilePath": "/home/gsus/Documentos/DESARROLLO/C_SHARP/clinica/clinica.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/gsus/.nuget/packages/microsoft.data.sqlite/7.0.0/microsoft.data.sqlite.7.0.0.nupkg.sha512",
+    "/home/gsus/.nuget/packages/microsoft.data.sqlite.core/7.0.0/microsoft.data.sqlite.core.7.0.0.nupkg.sha512",
+    "/home/gsus/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.2/sqlitepclraw.bundle_e_sqlite3.2.1.2.nupkg.sha512",
+    "/home/gsus/.nuget/packages/sqlitepclraw.core/2.1.2/sqlitepclraw.core.2.1.2.nupkg.sha512",
+    "/home/gsus/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.2/sqlitepclraw.lib.e_sqlite3.2.1.2.nupkg.sha512",
+    "/home/gsus/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.2/sqlitepclraw.provider.e_sqlite3.2.1.2.nupkg.sha512",
+    "/home/gsus/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512"
+  ],
   "logs": []
 }
