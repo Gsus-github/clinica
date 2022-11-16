@@ -2,10 +2,10 @@
 <configuracion>
   <rutas>
     <ruta name="MITO">
-      <direccion>MITO</direccion>
+      <direccion>E:\DESARROLLO\C_SHARP\clinica\MITO</direccion>
     </ruta>
-      <ruta name="BDD">
-    <direccion>E:\DESARROLLO\C_SHARP\clinica\BDD</direccion> 
+    <ruta name="BDD">
+      <direccion>E:\DESARROLLO\C_SHARP\clinica\BDD</direccion> 
     </ruta>
     <ruta name="LOGS">
       <direccion>LOGS</direccion>  
