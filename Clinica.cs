@@ -33,12 +33,7 @@ namespace ClinicaNS
 
             //Trabajos con contraseñas, salt y hashes
             GestionPassword contrasenas = new GestionPassword();
-            Console.WriteLine("Pass: ");
-            String entrada1 = Console.ReadLine();
-            Console.WriteLine("Sal: ");
-            String entrada2 = Console.ReadLine();
-            GestionPassword otraContrasena = new GestionPassword(entrada1, entrada2);
-
+            
 
 
         }
@@ -170,55 +165,55 @@ namespace ClinicaNS
 +--------------------------------------------------------------------------------------------------
 */
     public class GestionPassword{
+        String contrasena{get; set;} = "";
+        String sal{get; set;} = "";
+        String contrasenaHasheada{get; set;} = "";
 
         public GestionPassword(){
-            byte[] mostrarSal;
-            String passwordHasheada;
-            String contrasenaTextoClaro = "";
-            String salEnClaro;
 
-            mostrarSal = CrearSal();
-            Console.WriteLine("Sal: \n");
-            for (int i = 0; i < mostrarSal.Length; i++){
-                Console.Write(mostrarSal[i]);
-            }
-            salEnClaro = Encoding.ASCII.GetString(mostrarSal);
-            Console.WriteLine("\n" + salEnClaro);
-
-            Console.WriteLine("\n Contraseña texto plano: ");
-            contrasenaTextoClaro = Console.ReadLine();
-            passwordHasheada = crearPassHasheada(contrasenaTextoClaro, mostrarSal);
-            Console.WriteLine("Contraseña hasheada: " + passwordHasheada);
-
+            //Si se crea una instancia de GestionPassword sin argumentos, se genera una contraseña, una sal y una passsword hasheada
+            contrasena = crearContrasena();
+            Console.WriteLine("Nueva contraseña aleatoria: " + contrasena);
+            sal = CrearSal();
+            Console.WriteLine("Nueva sal: " + sal); 
+            contrasenaHasheada = hashearContrasena(contrasena, sal);
+            Console.WriteLine("Contraseña + sal + hash MD5: " + contrasenaHasheada);
+            contrasenaHasheada = hashearContrasena(contrasena, sal);
+            Console.WriteLine("Contraseña + sal + hash MD5: " + contrasenaHasheada);
         }
-
+                
         public GestionPassword(String passClaro, String salClaro){
-            byte[] salEnBytes;
-            byte[] passEnBytes;
-            String passComprobada;
-            int i;
-            
-            salEnBytes = new byte[salClaro.Length];
-            salEnBytes = Encoding.ASCII.GetBytes(salClaro);
-            for(i = 0; i < salEnBytes.Length; i++){
-                Console.Write(salEnBytes[i]);
-            }
-          
-            passComprobada = crearPassHasheada(passClaro, salEnBytes);
-
-            Console.WriteLine ("Comprobación: " + passComprobada);
-
-
-
+            contrasenaHasheada = hashearContrasena(passClaro, salClaro);
         }
-
+        
 
         /*
         +------------------------------------------------------------------------------------------
         | Generamos la sal
         +------------------------------------------------------------------------------------------
         */
-        public static byte[] CrearSal(){
+        public static String CrearSal(){
+            String nuevaSal = "";
+            String cadenaCaracteres = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz01234567890";
+            char[] caracter;
+            Random numeroAleatorio = new Random();
+            int longitudSal=0;
+            int i;
+
+            //Determinamos aleatorioamente la longitud de la cadena (entre 8 y 16 carácteres):
+            longitudSal = numeroAleatorio.Next(8,16);
+            caracter = new char[longitudSal];
+
+
+            //Creamos una cadena con el número de carácteres calculado
+            for (i = 0; i < longitudSal; i++){
+                caracter[i] = cadenaCaracteres[numeroAleatorio.Next(cadenaCaracteres.Length)];
+            }
+
+            nuevaSal = new String(caracter);
+            return nuevaSal;
+
+            /*
             //Genera un número aleatorio.
             RNGCryptoServiceProvider rng;
             Random numero = new Random();
@@ -226,7 +221,7 @@ namespace ClinicaNS
             byte[] salByte;
 
             //Generamos un número aleatorio para darle un tamaño aleatorio a la sal de entre 4 y 10 carácteres
-            tamanoSal = numero.Next(4, 8);
+            tamanoSal = numero.Next(4, 16);
 
             //Creamos una array de bytes con el tamaño conseguido
             salByte = new byte[tamanoSal];
@@ -234,43 +229,65 @@ namespace ClinicaNS
             //Rellenamos la sal con valores crypto fuertes
             rng = new RNGCryptoServiceProvider();
             rng.GetNonZeroBytes(salByte);
+            Console.WriteLine(salByte + " - " +  salByte.ToString());
 
             //Devolvemos la sal
             return salByte;
+            */
 
         }
 
-        public static String crearPassHasheada(String textoPlano, byte[] sal){
+        public static String hashearContrasena(String textoPlano, String sal){
             String textoHasheado = "";
-            byte[] plainTextBytes;
-            byte[] textoPlanoConSal;
+            String textoPlanoConSal = "";
+            byte[] textoBytes; 
             int i;
             HashAlgorithm hash;
             byte[] hashBytes;
 
-            //Convierte la password de texto plano en un array de bytes con caracteres UTF8
-            plainTextBytes = Encoding.UTF8.GetBytes(textoPlano);
-
             //Sumamos la sal
-            textoPlanoConSal = new byte[plainTextBytes.Length + sal.Length];
-            for (i=0; i < plainTextBytes.Length; i++){
-                textoPlanoConSal[i] = plainTextBytes[i];
-            } 
-            for (i = 0; i < sal.Length; i++){
-                textoPlanoConSal[plainTextBytes.Length+i] = sal[i]; 
-            }
+            textoPlanoConSal = textoPlano + sal;
 
             //Indicamos el tipo de hash que vamos a utilizar
             hash = new MD5CryptoServiceProvider();
 
+            //Pasamos la cadena a bytes
+            textoBytes = System.Text.Encoding.ASCII.GetBytes(textoPlanoConSal);
+
             //Creamos el hash
-            hashBytes = hash.ComputeHash(textoPlanoConSal);
-            textoHasheado = Convert.ToBase64String(hashBytes);
-
-
+            hashBytes = hash.ComputeHash(textoBytes);
+            textoHasheado = Convert.ToBase64String(textoBytes);
 
             return textoHasheado;
         }
+
+        private static String crearContrasena(){
+            String nuevaContrasena = "";
+            String cadenaCaracteres = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz01234567890";
+            char[] caracter;
+            Random numeroAleatorio = new Random();
+            int longitudContrasena=0;
+            int i;
+
+            //Determinamos aleatorioamente la longitud de la cadena (entre 8 y 16 carácteres):
+            longitudContrasena = numeroAleatorio.Next(8,16);
+            caracter = new char[longitudContrasena];
+
+
+            //Creamos una cadena con el número de carácteres calculado
+            for (i = 0; i < longitudContrasena; i++){
+                caracter[i] = cadenaCaracteres[numeroAleatorio.Next(cadenaCaracteres.Length)];
+            }
+
+            nuevaContrasena = new String(caracter);
+            return nuevaContrasena;
+
+
+            
+
+            return nuevaContrasena;
+        }
+        
         
     }
 
