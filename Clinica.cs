@@ -11,44 +11,35 @@ namespace ClinicaNS
         public static void Main(string[] args)
         {
             Clinica clinica = new Clinica();
-
-            Console.WriteLine("Pruebas para leer un archivo de configuración en xml");
-
             //Crear una instancia a un objeto que contenga la configuración.
             Configuracion configuracion = new Configuracion();
-            
+           
             //Instancia al documento XML
             XmlDocument doc = new XmlDocument();
             configuracion = cargarConfiguracion(doc);
-            
-
+ 
             Console.WriteLine("MITO: " + configuracion.rutaMito);
             Console.WriteLine("BDD: " + configuracion.rutaBdd);
             Console.WriteLine("LOGS: " + configuracion.rutaLogs);
             Console.WriteLine("DOCS: " + configuracion.rutaDocs);
             Console.WriteLine("BACKUP: " + configuracion.rutaBack);
 
+            //Creamos un nuevo usuario
+
+            Usuario usuario = new Usuario();
+
+            usuario.nombreUsuario ="usuario1";
+            usuario.passwordUsuario = "Minisdef01";
+           
             //Conexión con la base de datos principal
             BDDsqlite bdd = new BDDsqlite(configuracion.rutaBdd, "clinica.db");
-
-            //Trabajos con contraseñas, salt y hashes
-            GestionPassword contrasenas = new GestionPassword();
-            Console.WriteLine("Nueva contraseña aleatoria: " + contrasenas.contrasena);
-            Console.WriteLine("Nueva sal generada: " + contrasenas.sal);
-            Console.WriteLine("Contrasena final: " + contrasenas.contrasenaHasheada);
-            Console.WriteLine("Creamos una nueva contraseña dada: ");
-            GestionPassword nuevaContrasena = new GestionPassword("Minisdef01", "sal");
-            Console.WriteLine("Contraseña dada: " + nuevaContrasena.contrasena);
-            Console.WriteLine("Sal dada: " + nuevaContrasena.sal);
-            Console.WriteLine("Contrasena final: " + nuevaContrasena.contrasenaHasheada);
-            GestionPassword otraContrasena = new GestionPassword("Minisdef01");
-            Console.WriteLine("Contraseña dada: " + otraContrasena.contrasena);
-            Console.WriteLine("Sal generada: " + otraContrasena.sal);
-            Console.WriteLine("Contrasena final: " + otraContrasena.contrasenaHasheada);
-            
-            
+            bdd.AbrirBdd();
+            Boolean registrado = bdd.BuscarUsuario(usuario.nombreUsuario, usuario.passwordUsuario);
+            bdd.CerrarBdd();
+   
 
 
+ 
         }
 /*
 +--------------------------------------------------------------------------------------------------
@@ -100,11 +91,26 @@ namespace ClinicaNS
 
 /*
 +--------------------------------------------------------------------------------------------------
+| Clase Usuario para guardar todos los datos del usuario.
++--------------------------------------------------------------------------------------------------
+*/
+    public class Usuario{
+        public String nombreUsuario{get; set;}="";
+        public String passwordUsuario{get; set;}="";
+        public String saltUsuario{get; set;}="";
+        public String rolUsuario{get;set;}="";
+        public String dniUsuario{get;set;}="";
+    }
+
+/*
++--------------------------------------------------------------------------------------------------
 | Clase BDDsqlite para todas las operaciones relativas a las BDD en SQLite
 +--------------------------------------------------------------------------------------------------
 */
 
     public class BDDsqlite{
+
+        public static SqliteConnection? sqlite_conexion;
         /*
         +------------------------------------------------------------------------------------------
         | Constructor
@@ -112,14 +118,10 @@ namespace ClinicaNS
         */
         public BDDsqlite(String ruta, String nombreBdd){
             ruta = Path.Combine(ruta, nombreBdd);
-            Console.WriteLine("Abriendo base de datos principal en: " + ruta);
-            if(!File.Exists(ruta)){
-                Console.WriteLine("No existe el fichero de BDD");
-            }else{
-                Console.WriteLine("El fichero de BDD EXISTE");
-                //SqliteConnection sqlite_conexion = CreateConnection(ruta);
-                //String consulta = "SELECT [nombreUsuario] FROM [main].[tblUsuarios]";
-                //LeerDatos(sqlite_conexion, consulta);
+            String cadenaConexion = "Data Source=" + ruta;
+
+            if(File.Exists(ruta)){
+                sqlite_conexion = new SqliteConnection(cadenaConexion);
             }
   
         }
@@ -127,30 +129,45 @@ namespace ClinicaNS
         +------------------------------------------------------------------------------------------
         | Función que crea la conexión.
         +------------------------------------------------------------------------------------------
-        */
-        static SqliteConnection CreateConnection(String ruta)     {
-
-                SqliteConnection sqlite_conn;
-              
+        
+        public static SqliteConnection CreateConnection(String ruta)     {
+                SqliteConnection sqlite_con;
                 // Crear nueva conexión a la BDD
                 String cadenaConexion = "Data Source=" + ruta;
-                sqlite_conn = new SqliteConnection(cadenaConexion);
+                sqlite_con = new SqliteConnection(cadenaConexion);
                 // Open the connection:
                 try
                 {
-                    sqlite_conn.Open();
+                    sqlite_con.Open();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.GetBaseException().ToString());
                 }
-                return sqlite_conn;
+                return sqlite_con;
         }
+        */
+        
+        public void AbrirBdd(){
+            try
+                {
+                    sqlite_conexion.Open();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.GetBaseException().ToString());
+                }
+        }
+
+        public void CerrarBdd(){
+            sqlite_conexion.Close();
+        }
+        
         /*
         +------------------------------------------------------------------------------------------
         | Funcion que ejecuta una consulta
         +------------------------------------------------------------------------------------------
-        */
+        
         static void LeerDatos(SqliteConnection sqlite_conn, String consulta){
 
             //Abrir la conexión
@@ -169,14 +186,44 @@ namespace ClinicaNS
             };
             sqlite_conn.Close();
         }
+        */
 
+        internal bool BuscarUsuario(string nombreUsuario, string passwordUsuario)
+        {
+            String consulta = "SELECT [nombreUsuario], [password], [salt] FROM [main].[tblUsuarios] WHERE [nombreUsuario]=" + "'" + nombreUsuario + "'";
+            SqliteCommand comando = new SqliteCommand(consulta, sqlite_conexion);
+            comando = sqlite_conexion.CreateCommand();
+            GestionPassword contra;
+            AbrirBdd();
+            comando.CommandText=(consulta);
+            using(var lector = comando.ExecuteReader()){
+                if(lector.Read()){
+                    Console.WriteLine("El usuario existe: " + lector.GetString(0) + " su contraseña es " + lector.GetString(1) + " y su sal " + lector.GetString(2));
+                    contra = new GestionPassword(passwordUsuario, lector.GetString(2));
+                    if(contra.contrasenaHasheada == lector.GetString(1)){
+                        Console.WriteLine("La contraseña coincide");
+                        return true;
+                    }else{
+                        Console.WriteLine("La contraseña NO coincide");
+                    }
+                }else{
+                    Console.WriteLine("El usuario NO existe");
+                    return false;
+                };
+
+                return false;
+
+            }
+
+            throw new NotImplementedException();
+        }
     }
 
-/*
+/**
 +--------------------------------------------------------------------------------------------------
 | Clase GestionPassword para gestionar las contraseñas
 +--------------------------------------------------------------------------------------------------
-*/
+**/
     public class GestionPassword{
         public String contrasena{get; set;} = "";
         public String sal{get; set;} = "";
@@ -187,11 +234,7 @@ namespace ClinicaNS
             //Si se crea una instancia de GestionPassword sin argumentos, se genera una contraseña, una sal y una passsword hasheada
             contrasena = crearContrasena();
             sal = CrearSal();
-            
             contrasenaHasheada = hashearContrasena(contrasena, sal);
-            
-            contrasenaHasheada = hashearContrasena(contrasena, sal);
-            
         }
                 
         public GestionPassword(String passClaro, String salClaro){
@@ -214,7 +257,7 @@ namespace ClinicaNS
         */
         public static String CrearSal(){
             String nuevaSal = "";
-            String cadenaCaracteres = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz01234567890";
+            String cadenaCaracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890";
             char[] caracter;
             Random numeroAleatorio = new Random();
             int longitudSal=0;
@@ -233,35 +276,12 @@ namespace ClinicaNS
             nuevaSal = new String(caracter);
             return nuevaSal;
 
-            /*
-            //Genera un número aleatorio.
-            RNGCryptoServiceProvider rng;
-            Random numero = new Random();
-            int tamanoSal;
-            byte[] salByte;
-
-            //Generamos un número aleatorio para darle un tamaño aleatorio a la sal de entre 4 y 10 carácteres
-            tamanoSal = numero.Next(4, 16);
-
-            //Creamos una array de bytes con el tamaño conseguido
-            salByte = new byte[tamanoSal];
-            
-            //Rellenamos la sal con valores crypto fuertes
-            rng = new RNGCryptoServiceProvider();
-            rng.GetNonZeroBytes(salByte);
-            Console.WriteLine(salByte + " - " +  salByte.ToString());
-
-            //Devolvemos la sal
-            return salByte;
-            */
-
         }
 
         public static String hashearContrasena(String textoPlano, String sal){
             String textoHasheado = "";
             String textoPlanoConSal = "";
             byte[] textoBytes; 
-            int i;
             HashAlgorithm hash;
             byte[] hashBytes;
 
@@ -283,7 +303,7 @@ namespace ClinicaNS
 
         private static String crearContrasena(){
             String nuevaContrasena = "";
-            String cadenaCaracteres = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz01234567890";
+            String cadenaCaracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890";
             char[] caracter;
             Random numeroAleatorio = new Random();
             int longitudContrasena=0;
@@ -302,10 +322,6 @@ namespace ClinicaNS
             nuevaContrasena = new String(caracter);
             return nuevaContrasena;
 
-
-            
-
-            return nuevaContrasena;
         }
         
         
