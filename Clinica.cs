@@ -33,6 +33,19 @@ namespace ClinicaNS
 
             //Trabajos con contraseñas, salt y hashes
             GestionPassword contrasenas = new GestionPassword();
+            Console.WriteLine("Nueva contraseña aleatoria: " + contrasenas.contrasena);
+            Console.WriteLine("Nueva sal generada: " + contrasenas.sal);
+            Console.WriteLine("Contrasena final: " + contrasenas.contrasenaHasheada);
+            Console.WriteLine("Creamos una nueva contraseña dada: ");
+            GestionPassword nuevaContrasena = new GestionPassword("Minisdef01", "sal");
+            Console.WriteLine("Contraseña dada: " + nuevaContrasena.contrasena);
+            Console.WriteLine("Sal dada: " + nuevaContrasena.sal);
+            Console.WriteLine("Contrasena final: " + nuevaContrasena.contrasenaHasheada);
+            GestionPassword otraContrasena = new GestionPassword("Minisdef01");
+            Console.WriteLine("Contraseña dada: " + otraContrasena.contrasena);
+            Console.WriteLine("Sal generada: " + otraContrasena.sal);
+            Console.WriteLine("Contrasena final: " + otraContrasena.contrasenaHasheada);
+            
             
 
 
@@ -165,25 +178,32 @@ namespace ClinicaNS
 +--------------------------------------------------------------------------------------------------
 */
     public class GestionPassword{
-        String contrasena{get; set;} = "";
-        String sal{get; set;} = "";
-        String contrasenaHasheada{get; set;} = "";
+        public String contrasena{get; set;} = "";
+        public String sal{get; set;} = "";
+        public String contrasenaHasheada{get; set;} = "";
 
         public GestionPassword(){
 
             //Si se crea una instancia de GestionPassword sin argumentos, se genera una contraseña, una sal y una passsword hasheada
             contrasena = crearContrasena();
-            Console.WriteLine("Nueva contraseña aleatoria: " + contrasena);
             sal = CrearSal();
-            Console.WriteLine("Nueva sal: " + sal); 
+            
             contrasenaHasheada = hashearContrasena(contrasena, sal);
-            Console.WriteLine("Contraseña + sal + hash MD5: " + contrasenaHasheada);
+            
             contrasenaHasheada = hashearContrasena(contrasena, sal);
-            Console.WriteLine("Contraseña + sal + hash MD5: " + contrasenaHasheada);
+            
         }
                 
         public GestionPassword(String passClaro, String salClaro){
+            contrasena = passClaro;
+            sal = salClaro;
             contrasenaHasheada = hashearContrasena(passClaro, salClaro);
+        }
+
+        public GestionPassword(String passClaro){
+            contrasena = passClaro;
+            sal = CrearSal();
+            contrasenaHasheada = hashearContrasena(passClaro, sal);
         }
         
 
