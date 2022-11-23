@@ -44,7 +44,7 @@ namespace ClinicaNS{
             }
         }
         
-        
+        /*
         internal bool BuscarUsuario(string nombreUsuario, string passwordUsuario)
         {
             String consulta = "SELECT [nombreUsuario], [password], [salt] FROM [main].[tblUsuarios] WHERE [nombreUsuario]= 'usuario1'";
@@ -68,6 +68,36 @@ namespace ClinicaNS{
             }
 
             return false;
+        }
+        */
+
+        internal bool BuscarUsuario(string nombreUsuario)
+        {
+            //String consulta = "SELECT [nombreUsuario] FROM [main].[tblUsuarios] WHERE [nombreUsuario]='"+ nombreUsuario +"'";
+            SqliteCommand comando = new SqliteCommand();
+            SqliteDataReader lector;
+
+            
+            if (sqlite_conexion is not null){
+                comando = sqlite_conexion.CreateCommand();
+                comando.CommandText = @"SELECT [nombreUsuario] FROM [main].[tblUsuarios] WHERE [nombreUsuario]='"+ nombreUsuario +"'";
+            }
+            
+            lector = comando.ExecuteReader();
+
+            if(lector.Read()){
+                return true;
+            }else{
+                return false;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        internal bool ComprobarContrasena(string passwordUsuario)
+        {
+            return false;
+            throw new NotImplementedException();
         }
     }
 }

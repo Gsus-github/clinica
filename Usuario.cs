@@ -11,7 +11,6 @@ namespace ClinicaNS{
         public String rolUsuario{get;set;}="";
         public String dniUsuario{get;set;}="";
         public Boolean verificado{get; private set;} = false;
-
         public GestionPassword contrasena;
 
         public Usuario(String nombre, string passw, Configuracion configuracion){
@@ -19,10 +18,22 @@ namespace ClinicaNS{
             passwordUsuario = passw;
             contrasena = new GestionPassword(nombreUsuario, passwordUsuario);
 
+            //Existe el usuario en la BDD??
             BDDsqlite bdd = new BDDsqlite(configuracion.rutaBdd, "clinica.db");
             bdd.AbrirBdd();
-            verificado = bdd.BuscarUsuario(nombreUsuario, passwordUsuario);
-            bdd.CerrarBdd();
+            if(bdd.BuscarUsuario(nombreUsuario)){
+                Console.WriteLine("El usuario " + nombreUsuario + " EXISTE ");
+                if(bdd.ComprobarContrasena(passwordUsuario)){
+                    verificado = true;
+                }else{
+                    verificado = false;
+                }
+                Console.WriteLine("El usuario " + nombreUsuario + " NO EXISTE ");
+                verificado = false;
+            }
+
+            //Su contraseña es correcta??
+
 
         }
     }

@@ -32,7 +32,7 @@ namespace ClinicaNS
             //Creamos otro usuario para poder comparar
             Usuario usuario2 = new Usuario("usuario33", "Minisdef01", configuracion);
 
-            if (usuario.verificado){
+            if (usuario2.verificado){
                 Console.WriteLine ("El usuario: " + usuario2.nombreUsuario + " está verificado.");
                 Console.WriteLine ("Pass hash: " + usuario2.contrasena.contrasenaHasheada);
             }else{
