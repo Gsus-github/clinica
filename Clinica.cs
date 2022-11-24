@@ -10,6 +10,8 @@ namespace ClinicaNS
         public static void Main(string[] args)
         {
             Clinica clinica = new Clinica();
+            String nUsuario = "";
+            String pUsuario = "";
             //Crear una instancia a un objeto que contenga la configuración.
             Configuracion configuracion = new Configuracion();
             Console.WriteLine("MITO: " + configuracion.rutaMito);
@@ -20,23 +22,20 @@ namespace ClinicaNS
 
             //Creamos un nuevo usuario
 
-            Usuario usuario = new Usuario("usuario1", "Minisdef01", configuracion);
+            Console.Write("Nombre de usuario: ");
+            nUsuario = Console.ReadLine();
+            //nUsuario = "usuario1";
+            Console.Write("\nContraseña: ");
+            pUsuario = Console.ReadLine();
+            //pUsuario = "Minisdef01";
+
+
+            Usuario usuario = new Usuario(nUsuario, pUsuario, configuracion);
 
             if (usuario.verificado){
                 Console.WriteLine ("El usuario: " + usuario.nombreUsuario + " está verificado.");
-                Console.WriteLine ("Pass hash: " + usuario.contrasena.contrasenaHasheada);
             }else{
                 Console.WriteLine ("EL usuario: " + usuario.nombreUsuario + " NO está verificado.");
-            }
-
-            //Creamos otro usuario para poder comparar
-            Usuario usuario2 = new Usuario("usuario33", "Minisdef01", configuracion);
-
-            if (usuario2.verificado){
-                Console.WriteLine ("El usuario: " + usuario2.nombreUsuario + " está verificado.");
-                Console.WriteLine ("Pass hash: " + usuario2.contrasena.contrasenaHasheada);
-            }else{
-                Console.WriteLine ("EL usuario: " + usuario2.nombreUsuario + " NO está verificado.");
             }
         }
     }

@@ -22,19 +22,14 @@ namespace ClinicaNS{
             BDDsqlite bdd = new BDDsqlite(configuracion.rutaBdd, "clinica.db");
             bdd.AbrirBdd();
             if(bdd.BuscarUsuario(nombreUsuario)){
-                Console.WriteLine("El usuario " + nombreUsuario + " EXISTE ");
-                if(bdd.ComprobarContrasena(passwordUsuario)){
+                if(bdd.ComprobarContrasena(nombreUsuario, passwordUsuario)){
                     verificado = true;
                 }else{
                     verificado = false;
                 }
-                Console.WriteLine("El usuario " + nombreUsuario + " NO EXISTE ");
+            }else{
                 verificado = false;
             }
-
-            //Su contraseña es correcta??
-
-
         }
     }
 }

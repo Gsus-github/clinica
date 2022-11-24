@@ -73,7 +73,6 @@ namespace ClinicaNS{
 
         internal bool BuscarUsuario(string nombreUsuario)
         {
-            //String consulta = "SELECT [nombreUsuario] FROM [main].[tblUsuarios] WHERE [nombreUsuario]='"+ nombreUsuario +"'";
             SqliteCommand comando = new SqliteCommand();
             SqliteDataReader lector;
 
@@ -94,10 +93,30 @@ namespace ClinicaNS{
             throw new NotImplementedException();
         }
 
-        internal bool ComprobarContrasena(string passwordUsuario)
+        internal bool ComprobarContrasena(string nombre, string passwordUsuario)
         {
+            SqliteCommand comando = new SqliteCommand();
+            SqliteDataReader lector;
+            GestionPassword passuser;
+            
+
+            
+            if (sqlite_conexion is not null){
+                comando = sqlite_conexion.CreateCommand();
+                comando.CommandText = @"SELECT [nombreUsuario], [password], [salt] FROM [main].[tblUsuarios] WHERE [nombreUsuario]='"+ nombre +"'";
+            }
+            
+            lector = comando.ExecuteReader();
+
+            while (lector.Read()){
+                passuser = new GestionPassword(passwordUsuario, lector[2].ToString());
+                Console.WriteLine(lector[0] + " | " + lector[1] + " | " + lector[2]);
+                if (passuser.contrasenaHasheada.Equals(lector[1])){
+                    return true;
+                }
+            }
+
             return false;
-            throw new NotImplementedException();
         }
     }
 }
