@@ -20,8 +20,6 @@ namespace ClinicaNS
             Console.WriteLine("DOCS: " + configuracion.rutaDocs);
             Console.WriteLine("BACKUP: " + configuracion.rutaBack);
 
-            //Creamos un nuevo usuario
-
             Console.Write("Nombre de usuario: ");
             nUsuario = Console.ReadLine();
             //nUsuario = "usuario1";
@@ -33,9 +31,14 @@ namespace ClinicaNS
             Usuario usuario = new Usuario(nUsuario, pUsuario, configuracion);
 
             if (usuario.verificado){
-                Console.WriteLine ("El usuario: " + usuario.nombreUsuario + " está verificado.");
+                Console.WriteLine ("El usuario: " + usuario.nombreUsuario + " está verificado." + usuario.verificado.ToString());
+                Console.WriteLine("Nombre usuario: " + usuario.nombreUsuario);
+                Console.WriteLine("Password usuario: " + usuario.passwordUsuario);
+                Console.WriteLine("Salt usuario: " + usuario.saltUsuario);
+                Console.WriteLine("Rol usuario: " + usuario.rolUsuario);
+                Console.WriteLine("DNI usuario: " + usuario.dniUsuario);
             }else{
-                Console.WriteLine ("EL usuario: " + usuario.nombreUsuario + " NO está verificado.");
+                Console.WriteLine ("EL usuario: " + usuario.nombreUsuario + " NO está verificado." + usuario.verificado.ToString());
             }
         }
     }

@@ -18,18 +18,23 @@ namespace ClinicaNS{
             passwordUsuario = passw;
             contrasena = new GestionPassword(nombreUsuario, passwordUsuario);
 
-            //Existe el usuario en la BDD??
+            //Verificar usuario
             BDDsqlite bdd = new BDDsqlite(configuracion.rutaBdd, "clinica.db");
             bdd.AbrirBdd();
             if(bdd.BuscarUsuario(nombreUsuario)){
                 if(bdd.ComprobarContrasena(nombreUsuario, passwordUsuario)){
                     verificado = true;
+                    //Cargando resto de datos del usuairo
+                    rolUsuario = bdd.getRolUsuario(nombreUsuario);
+                    dniUsuario = bdd.getDniUsuario(nombreUsuario);
                 }else{
                     verificado = false;
                 }
             }else{
                 verificado = false;
             }
+
+
         }
     }
 }

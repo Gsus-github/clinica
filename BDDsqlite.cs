@@ -110,13 +110,57 @@ namespace ClinicaNS{
 
             while (lector.Read()){
                 passuser = new GestionPassword(passwordUsuario, lector[2].ToString());
-                Console.WriteLine(lector[0] + " | " + lector[1] + " | " + lector[2]);
                 if (passuser.contrasenaHasheada.Equals(lector[1])){
                     return true;
                 }
             }
 
             return false;
+        }
+
+        internal string getDniUsuario(String nombre)
+        {
+            SqliteCommand comando = new SqliteCommand();
+            SqliteDataReader lector;
+            String rol = "";
+            
+            if (sqlite_conexion is not null){
+                comando = sqlite_conexion.CreateCommand();
+                comando.CommandText = @"SELECT [nombreUsuario], [dniPropietario] FROM [main].[tblUsuarios] WHERE [nombreUsuario]='"+ nombre +"'";
+            }
+            
+            lector = comando.ExecuteReader();
+
+            while (lector.Read()){
+                if (lector[1] is not null){
+                    rol = lector[1].ToString();
+                }
+            }
+
+            return rol;
+        }
+
+        internal string getRolUsuario(String nombre)
+        {
+            SqliteCommand comando = new SqliteCommand();
+            SqliteDataReader lector;
+            String rol = "";
+            
+            if (sqlite_conexion is not null){
+                comando = sqlite_conexion.CreateCommand();
+                comando.CommandText = @"SELECT [nombreUsuario], [rol] FROM [main].[tblUsuarios] WHERE [nombreUsuario]='"+ nombre +"'";
+            }
+            
+            lector = comando.ExecuteReader();
+
+            while (lector.Read()){
+                if (lector[1] is not null){
+                    rol = lector[1].ToString();
+                }
+            }
+
+            return rol;
+            throw new NotImplementedException();
         }
     }
 }
