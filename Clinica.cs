@@ -34,7 +34,6 @@ namespace ClinicaNS
                 Console.WriteLine ("El usuario: " + usuario.nombreUsuario + " está verificado." + usuario.verificado.ToString());
                 Console.WriteLine("Nombre usuario: " + usuario.nombreUsuario);
                 Console.WriteLine("Password usuario: " + usuario.passwordUsuario);
-                Console.WriteLine("Salt usuario: " + usuario.saltUsuario);
                 Console.WriteLine("Rol usuario: " + usuario.rolUsuario);
                 Console.WriteLine("DNI usuario: " + usuario.dniUsuario);
             }else{

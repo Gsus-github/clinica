@@ -59,3 +59,17 @@ E:\DESARROLLO\C_SHARP\clinica\obj\Debug\net6.0\clinica.csproj.CopyComplete
 E:\DESARROLLO\C_SHARP\clinica\obj\Debug\net6.0\refint\clinica.dll
 E:\DESARROLLO\C_SHARP\clinica\obj\Debug\net6.0\clinica.genruntimeconfig.cache
 E:\DESARROLLO\C_SHARP\clinica\obj\Debug\net6.0\ref\clinica.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\System.Data.OleDb.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\System.Diagnostics.PerformanceCounter.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\System.Drawing.Common.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\System.Security.Permissions.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\System.Windows.Extensions.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Data.OleDb.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Diagnostics.PerformanceCounter.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\DESARROLLO\C_SHARP\clinica\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll

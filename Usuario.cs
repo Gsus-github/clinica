@@ -12,14 +12,17 @@ namespace ClinicaNS{
         public String dniUsuario{get;set;}="";
         public Boolean verificado{get; private set;} = false;
         public GestionPassword contrasena;
+        
 
         public Usuario(String nombre, string passw, Configuracion configuracion){
             nombreUsuario = nombre;
             passwordUsuario = passw;
             contrasena = new GestionPassword(nombreUsuario, passwordUsuario);
+            BDDsqlite bdd = new BDDsqlite(configuracion.rutaBdd, "clinica.db");
+            bddAccess bddMito = new bddAccess(configuracion.rutaMito, "MitoC.mdb", "MITO.mdw");
 
             //Verificar usuario
-            BDDsqlite bdd = new BDDsqlite(configuracion.rutaBdd, "clinica.db");
+            
             bdd.AbrirBdd();
             if(bdd.BuscarUsuario(nombreUsuario)){
                 if(bdd.ComprobarContrasena(nombreUsuario, passwordUsuario)){
